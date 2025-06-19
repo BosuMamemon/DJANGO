@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Detail</title>
+    </head>
+    <body>
+        <h3>
+            Detail //
+            <a href="/list/">전체보기</a>
+        </h3>
+        id: {{dto.idx}} <br>
+        hit: {{dto.hit}} <br>
+        title: {{dto.title}} <br>
+        writer: {{dto.writer}} <br>
+        content: {{dto.content}} <br>
+        post_date: {{dto.post_date}} <br>
+        file_name: {{dto.file_name}} <br>
+        <br>
+        <a href="/update_form/{{dto.idx}}/">수정</a>
+        <a href="/delete/{{dto.idx}}/">삭제</a>
+        <br><br>
+        <h4>Comment</h4>
+        <form action="/comment_insert/" method="post">
+            <input type="hidden" name="idx" value="{{dto.idx}}">
+            <input type="text" name="writer" placeholder="Writer goes here."><br>
+            <textarea name="content" rows="5" cols="50" placeholder="Comment goes here."></textarea>
+            <button type="submit">전송</button>
+        </form>
+        <hr>
+        {% for comment in comment_list %}
+            {{comment.writer}} / {{comment.content}} / {{comment.post_date}} <br>
+        {% endfor %}
+    </body>
+</html>

@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>List</title>
+        <script src="{% static 'jquery-3.7.1.min.js' %}"></script>
+    <body>
+        <h3>
+            LIST({{board_count}}) //
+            <a href="/write_form/">WRITE</a> //
+            <a href="{% url 'write' %}">추가(name 사용)</a>
+        </h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>조회수</th>
+                    <th>첨부파일</th>
+                    <th>파일이미지</th>
+                    <th>다운로드</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for board in board_list %}
+                <tr>
+                    <td>{{board.idx}}</td>
+                    <td>
+                        <a href="/detail_idx?idx={{board.idx}}">{{board.title}}</a>//
+                        <a href="/detail/{{board.idx}}">{{board.title}}</a>
+                    </td>
+                    <td>{{board.writer}}</td>
+                    <td>{{board.post_date}}</td>
+                    <td>{{board.hit}}</td>
+                    <td>{{board.file_name}}</td>
+                    <td>
+                        {% if board.file_size > 0 %}
+                            <span class="_imgs" data-url="/download_count?idx={{board.idx}}">
+                                <img src="{% static 'images/file.jpg' %}">
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td class="downcount">{{board.down}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <script>
+            // const imgs = document.querySelectorAll('._imgs')
+            // imgs.forEach(function(img) {
+            //     img.addEventListener('click', function() {
+            //         const url = this.getAttribute('data-url')
+            //         fetch(url)
+            //             .then(resp => resp.json())
+            //             .then(data => {
+            //                 this.parentElement.parentElement.querySelector(".downcount").textContent = data.count
+            //                 location.href = "/download?idx=" + data.idx
+            //             })
+            //     })
+            // })
+
+            $("._imgs").on('click', function() {
+                _imgs = $(this)
+                $.ajax({
+                    url: $(this).data('url'),  // $(this).attr('data-url')과 같은 말임
+                    type: 'GET',
+                    success: function(resp) {
+                        _imgs.parent().parent().find(".downcount").text(resp.count)
+                        location.href = "/download?idx=" + resp.idx
+                    }
+                })
+            })
+        </script>
+    </body>
+</html>

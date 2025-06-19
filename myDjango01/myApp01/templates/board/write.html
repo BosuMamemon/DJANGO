@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <h3>Insert</h3>
+        <form action="/insert/" method="post">
+            <!-- {% csrf_token %} -->
+             <!-- 사실 위에처럼 csrf 토큰을 써야하는데 그냥 설정에서 안쓰는 걸로 합의 -->
+            Writer: <input type="text" name="writer" /> <br>
+            Title: <input type="text" name="title" /> <br>
+            Content: <textarea name="content"></textarea> <br>
+            <button type="submit">Submit</button>
+            <button type="reset">Reset</button>
+        </form>
+    </body>
+</html>
