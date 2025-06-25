@@ -3,7 +3,9 @@ import urllib.parse
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from app01.models import Board, Comment
+from .models import Board, Comment
+from django.db.models import Q
+import math
 
 # Create your views here.
 UPLOAD_DIR = "C:/JHM/학습 workspace/DJANGO/upload/"
@@ -35,16 +37,71 @@ def write(request):
 
     return redirect("/list/")
 
+# def list(request):
+#     board_list = Board.objects.all()
+#     board_count = Board.objects.all().count
+#     # print("board_list.query:", board_list.query)
+#     context = {
+#         'board_list': board_list,
+#         'board_count': board_count
+#     }
+#
+#     # render(리퀘스트객체, 요청주소, 담고갈dict정보)
+#     return render(request, 'board/list.html', context)
+
+# 검색포함 전체 보기
 def list(request):
-    board_list = Board.objects.all()
-    board_count = Board.objects.all().count
-    # print("board_list.query:", board_list.query)
+    word = request.GET.get('word', '')  # 기본값을 주고 싶을 때는 저렇게 두번째 값을 줌
+    field = request.GET.get('field', 'title')
+    page = request.GET.get('page', 1)
+
+    if field == 'all':
+        board_list = Board.objects.filter(
+            Q(writer__contains=word) | Q(title__contains=word) | Q(content__contains=word)
+        ).order_by('-idx')
+    elif field == 'writer':
+        board_list = Board.objects.filter(Q(writer__contains=word)).order_by('-idx')
+    elif field == 'title':
+        board_list = Board.objects.filter(Q(title__contains=word)).order_by('-idx')
+    elif field == 'content':
+        board_list = Board.objects.filter(Q(content__contains=word)).order_by('-idx')
+    else:
+        board_list = Board.objects.all().order_by('-idx')
+
+    if field == 'all':
+        board_count = Board.objects.filter(
+            Q(writer__contains=word) | Q(title__contains=word) | Q(content__contains=word)
+        ).count()
+    elif field == 'writer':
+        board_count = Board.objects.filter(Q(writer__contains=word)).count()
+    elif field == 'title':
+        board_count = Board.objects.filter(Q(title__contains=word)).count()
+    elif field == 'content':
+        board_count = Board.objects.filter(Q(content__contains=word)).count()
+    else:
+        board_count = Board.objects.all().count()
+
+    block_page = 3
+    page_size = 5
+    current_page = int(page)
+    total_page = math.ceil(board_count / page_size)
+    start_page = math.floor((current_page - 1) / block_page) * block_page + 1
+    end_page = start_page + block_page - 1
+    if end_page > total_page:
+        end_page = total_page
+
     context = {
         'board_list': board_list,
-        'board_count': board_count
+        'board_count': board_count,
+        'start_page': start_page,
+        'block_page': block_page,
+        'current_page': current_page,
+        'end_page': end_page,
+        'total_page': total_page,
+        'range': range(start_page, end_page + 1),
+        'field': field,
+        'word': word,
     }
-
-    # render(리퀘스트객체, 요청주소, 담고갈dict정보)
     return render(request, 'board/list.html', context)
 
 def detail_idx(request):
