@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h3 class="mb-4">상세 보기</h3>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p><strong>작성자:</strong> {{dto.writer}}</p>
+                        <p><strong>제목:</strong> {{dto.title}}</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p><strong>조회수:</strong> {{dto.hit}}</p>
+                        <p><strong>작성일:</strong> {{dto.post_date}}</p>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <p><strong>첨부파일:</strong> {{dto.file_name}}</p>
+                </div>
+
+                <div class="mb-4">
+                    <strong>내용:</strong>
+                    <div class="mt-2 p-3 bg-light rounded">{{dto.content}}</div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-primary" onclick="location.href='/update_form/{{dto.id}}/'">수정</button>
+                    <button type="button" class="btn btn-danger">삭제</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='/boardlist'">목록</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">댓글</h4>
+                <form action="/comment_insert/{{dto.id}}/" method="post" class="mb-4">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="text" name="writer" class="form-control" placeholder="작성자">
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="content" class="form-control" rows="3" placeholder="댓글을 입력하세요"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">댓글 작성</button>
+                </form>
+
+                <div class="comment-list">
+                    <h4 class="card-title mb-4">Comment({{dto.comment_set.count}})</h4>
+                    {% for comment in dto.comment_set.all %}
+                    <div class="card mb-2">
+                        <div class="card-body py-2">
+                            <div class="d-flex justify-content-between">
+                                <strong>{{comment.writer}}</strong>
+                                <small class="text-muted">{{comment.post_date|date:'Y-m-d'}}</small>
+                            </div>
+                            <p class="mb-0 mt-2">{{comment.content}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        document.querySelector('.btn-danger').addEventListener('click', function() {
+            if(confirm('정말로 삭제하시겠습니까?')) {
+                location.href='/delete/{{dto.id}}/'
+            }
+        })
+    </script>
+{% endblock %}

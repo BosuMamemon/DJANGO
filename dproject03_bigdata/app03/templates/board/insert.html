@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h2>Insert</h2>
+        <form action="/insert/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            Writer: <input type="text" class="form-control" name="writer" /><br>
+            Title: <input type="text" class="form-control" name="title" /><br>
+            Content: <textarea class="form-control" name="content"></textarea><br>
+            File: <input type="file" class="form-control" name="file"><br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+        </form>
+    </div>
+{% endblock %}

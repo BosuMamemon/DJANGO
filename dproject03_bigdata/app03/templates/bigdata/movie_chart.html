@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container my-3">
+        <h3>네이버 영화 차트</h3>
+        <div style="width: 80%; max-width: 800px; margin: auto;">
+            <img src="{{datas.grade_chart}}" style="width: 100%;">
+            <img src="{{datas.count_chart}}" style="width: 100%;">
+            <img src="{{datas.count_20}}" style="width: 100%;">
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container my-3">
+        <h3>부산 내 스타벅스 점포 정보</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>점포명</th>
+                    <th>주소</th>
+                    <th>전화번호</th>
+                    <th>위도</th>
+                    <th>경도</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in datas %}
+                    <tr>
+                        <td>{{data.name}}</td>
+                        <td>{{data.address}}</td>
+                        <td>{{data.tel}}</td>
+                        <td>{{data.latitude}}</td>
+                        <td>{{data.longtitude}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

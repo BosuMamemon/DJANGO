@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'jquery-3.7.1.min.js' %}"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-sm bg-light navbar-light">
+      <div class="container-fluid">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/melon/">노래 순위</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/movie/">영화 순위</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/movie_chart/">영화 차트</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/starbucks/">스타벅스</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+<!--    기본 템플릿 안에 삽입될 내용 -->
+    {% block content %}
+    {% endblock %}
+
+<!--  자바 스크립트 -->
+    {% block script %}
+    {% endblock %}
+  </body>
+</html>

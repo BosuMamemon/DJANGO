@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h2>Update</h2>
+        <form action="/update/{{board.id}}/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            Writer: <input type="text" class="form-control" name="writer" value="{{board.writer}}" readonly /><br>
+            Title: <input type="text" class="form-control" name="title" value="{{board.title}}" /><br>
+            Content: <textarea class="form-control" name="content">{{board.content}}</textarea><br>
+            File: <input type="file" class="form-control" name="file"><br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+        </form>
+    </div>
+{% endblock %}

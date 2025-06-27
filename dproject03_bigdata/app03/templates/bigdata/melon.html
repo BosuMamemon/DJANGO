@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container my-3">
+        <h3>멜론 노래 순위 TOP 50</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>순위</th>
+                    <th>곡명</th>
+                    <th>가수</th>
+                    <th>앨범명</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in datas %}
+                    <tr>
+                        <td>{{data.rank}}</td>
+                        <td>{{data.title}}</td>
+                        <td>{{data.singer}}</td>
+                        <td>{{data.album}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

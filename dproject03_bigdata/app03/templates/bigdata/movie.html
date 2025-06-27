@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container my-3">
+        <h3>네이버 박스 오피스 TOP 10</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>순위</th>
+                    <th>영화명</th>
+                    <th>평점</th>
+                    <th>관객수</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in datas %}
+                    <tr>
+                        <td>{{data.rank}}</td>
+                        <td>{{data.title}}</td>
+                        <td>{{data.grade}}</td>
+                        <td>{{data.count}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
