@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.db import models
 
+
 # Create your models here.
 class Board(models.Model):
     writer = models.CharField(null=False, max_length=50)
@@ -17,6 +18,7 @@ class Board(models.Model):
 
     def down_up(self):
         self.down += 1
+
 
 class Comment(models.Model):
     board = models.ForeignKey(Board, on_delete=models.CASCADE)

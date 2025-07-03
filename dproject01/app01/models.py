@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Board(models.Model):
     idx = models.AutoField(primary_key=True)
     writer = models.CharField(null=False, max_length=50)
@@ -16,9 +17,10 @@ class Board(models.Model):
 
     def hit_up(self):
         self.hit += 1
-    
+
     def down_up(self):
         self.down += 1
+
 
 class Comment(models.Model):
     idx = models.AutoField(primary_key=True)
@@ -26,4 +28,3 @@ class Comment(models.Model):
     writer = models.CharField(null=False, max_length=50)
     content = models.TextField(null=False)
     post_date = models.DateField(default=datetime.now, blank=True)
-

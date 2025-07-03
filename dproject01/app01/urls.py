@@ -3,7 +3,7 @@ from app01 import views
 
 urlpatterns = [
     path("", views.list),
-    path("write_form/", views.write_form, name='write'),
+    path("write_form/", views.write_form, name="write"),
     path("write/", views.write),
     path("list/", views.list),
     path("detail_idx/", views.detail_idx),
@@ -13,7 +13,6 @@ urlpatterns = [
     path("update/", views.update),
     path("download_count/", views.download_count),
     path("download/", views.download),
-
-#     Comment 관련
-    path("comment_insert/", views.comment_insert)
+    #     Comment 관련
+    path("comment_insert/", views.comment_insert),
 ]
