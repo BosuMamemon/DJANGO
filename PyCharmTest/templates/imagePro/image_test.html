@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{ predict }}<br>
+{% for i in predict %}
+    예측값 : {{ i.item }}
+    {# forloop.counter를 쓰면 1부터 시작해서 for문의 끝까지 돌아감 #}
+    <img src="{{ MEDIA_URL }}/test_image/test/0{{ forloop.counter }}.jpg" width="100" height="100"><br>
+{% endfor %}
+</body>
+</html>
